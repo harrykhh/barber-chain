@@ -9,7 +9,8 @@ Add your MONGO_URI and user password to the d/server/config/config.json file. Ma
 
 ```bash
 # Install dependencies for server
-npm install
+bower cache clean && bower install
+npm app
 
 # Run the server with concurrently
 node --harmony app.js
@@ -19,7 +20,7 @@ node --harmony app.js
 
 ## Deployment
 
-There is a Heroku post build script so that you do not have to compile your React frontend manually, it is done on the server. Simply push to Heroku and it will build
+Simply push to Heroku and it will build
 
 ## App Info
 This application is built for barber chains to allow the owner track sales report for each store after the assigned regular user inputs the sales after end of day. The sales report can be futher utilize and build different charts for business analysis when implmented with [Chart.js](https://www.chartjs.org/)
