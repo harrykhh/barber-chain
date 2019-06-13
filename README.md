@@ -20,12 +20,15 @@ node --harmony app.js
 There is a Heroku post build script so that you do not have to compile your React frontend manually, it is done on the server. Simply push to Heroku and it will build
 
 ## App Info
-```bash
-Demo of application [HERE](https://moonstonedev.herokuapp.com/)
+This application is built for barber chains to allow the owner track sales report for each store after the assigned regular user inputs the sales after end of day. The sales report can be futher utilize and build different charts for business analysis when implmented with [Chart.js](https://www.chartjs.org/)
 
+> Current functions of app includes User management, Store management, New Daily Summary, Edit Daily Summary and Custom dates report
+
+### Demo of application [HERE](https://moonstonedev.herokuapp.com/)
+```bash
 Regular user:
-username: test1
-Password: test1
+username: test1   username: shelly
+Password: test1   Password: shelly
 
 Admin user:
 username: admin
