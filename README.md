@@ -23,7 +23,7 @@ node --harmony app.js
 Simply push to Heroku and it will build
 
 ## App Info
-This application is built for barber chains owners to allow them track sales report for each store after the assigned regular user inputs the sales after end of day. The sales report can be further utilize and build different charts for business analysis when implemented with [Chart.js](https://www.chartjs.org/)
+This application is built for barber chains owners to allow them track sales reporting for each store after the assigned regular user inputs the sales after end of day. The sales report can be further utilize and build different charts for business analysis when implemented with [Chart.js](https://www.chartjs.org/)
 
 > Current functions of application includes User management, Store management, New Daily Summary, Edit Daily Summary and Custom dates report, Export report to MS excel or PDF
 
