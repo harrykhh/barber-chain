@@ -1,6 +1,8 @@
 # barber-chain
 > Barber chain application using MEN (Mongo, Express, Node) stack
 
+![](screens.gif)
+
 ## Quick Start
 
 Add your MONGO_URI and user password to the d/server/config/config.json file. Make sure you set an env var for that on deployment
@@ -22,7 +24,7 @@ There is a Heroku post build script so that you do not have to compile your Reac
 ## App Info
 This application is built for barber chains to allow the owner track sales report for each store after the assigned regular user inputs the sales after end of day. The sales report can be futher utilize and build different charts for business analysis when implmented with [Chart.js](https://www.chartjs.org/)
 
-> Current functions of application includes User management, Store management, New Daily Summary, Edit Daily Summary and Custom dates report
+> Current functions of application includes User management, Store management, New Daily Summary, Edit Daily Summary and Custom dates report, Export report to MS excel or PDF
 
 ### Demo of application [HERE](https://moonstonedev.herokuapp.com/)
 ```bash
