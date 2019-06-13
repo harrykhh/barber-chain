@@ -1,0 +1,112 @@
+script(type='text/javascript').
+  try{ace.settings.loadState('main-container')}catch(e){}
+#sidebar.sidebar.responsive.ace-save-state
+  script(type='text/javascript').
+    try{ace.settings.loadState('sidebar')}catch(e){}
+  #sidebar-shortcuts.sidebar-shortcuts
+    #sidebar-shortcuts-large.sidebar-shortcuts-large
+      a.btn.btn-success(href='/customreport/'+selectedStore)
+        i.ace-icon.fa.fa-book
+      |  
+      a.btn.btn-info#newreportlink(href='/newReport/'+selectedStore)
+        i.ace-icon.fa.fa-bank
+      |  
+      a.btn.btn-warning(href='/profile')
+        i.ace-icon.fa.fa-user
+      |  
+      a.btn.btn-danger(href='/logout')
+        i.ace-icon.fa.fa-power-off
+    #sidebar-shortcuts-mini.sidebar-shortcuts-mini
+      span.btn.btn-success
+      span.btn.btn-info
+      span.btn.btn-warning
+      span.btn.btn-danger
+  ul.nav.nav-list
+    li#Dashboard
+      a(href='/')
+        i.menu-icon.fa.fa-tachometer
+        |  
+        span.menu-text Dashboard
+      b.arrow
+    li#customReport
+      a.dropdown-toggle(href='#')
+        i.menu-icon.fa.fa-book
+        |  
+        span.menu-text Custom Report
+        b.arrow.fa.fa-angle-down
+      b.arrow
+      ul.submenu
+        each store in user.stores
+          li(id='customreport'+store.id)
+            a(href='/customReport/'+ store.id)
+              i.menu-icon.fa.fa-caret-right
+              |  #{store.desc}
+            b.arrow
+    li#newReport
+      a.dropdown-toggle(href='#')
+        i.menu-icon.fa.fa-bank
+        |  
+        span.menu-text New Daily Summary
+        b.arrow.fa.fa-angle-down
+      b.arrow
+      ul.submenu
+        each store in user.stores
+          li(id='store'+store.id)
+            a(href='/newReport/'+ store.id)
+              i.menu-icon.fa.fa-caret-right
+              |  #{store.desc}
+            b.arrow
+    - if (user.admin){
+    li#editReport
+      a.dropdown-toggle(href='#')
+        i.menu-icon.fa.fa-pencil-square-o
+        |  
+        span.menu-text Edit Daily Summary
+        b.arrow.fa.fa-angle-down
+      b.arrow
+      ul.submenu
+        each store in user.stores
+          li(id='editreport'+store.id)
+            a(href='/editReport/'+ store.id)
+              i.menu-icon.fa.fa-caret-right
+              |  #{store.desc}
+            b.arrow
+    li#Store
+      a.dropdown-toggle(href='#')
+        i.menu-icon.fa.material-icons.md-18 store
+        |  
+        span.menu-text Stores
+        b.arrow.fa.fa-angle-down
+      b.arrow
+      ul.submenu
+        li#NewStore
+          a(href='/newStore')
+            i.menu-icon.fa.fa-caret-right
+            |  New Store
+          b.arrow
+        li#EditStore
+          a(href='/editStore')
+            i.menu-icon.fa.fa-caret-right
+            |  Edit Store
+          b.arrow
+    li#User
+      a.dropdown-toggle(href='#')
+        i.menu-icon.fa.fa-users
+        |  
+        span.menu-text User Management
+        b.arrow.fa.fa-angle-down
+      b.arrow
+      ul.submenu
+        li#NewUser
+          a(href='/newUser')
+            i.menu-icon.fa.fa-caret-right
+            |  New User
+          b.arrow
+        li#EditUser
+          a(href='/editUser')
+            i.menu-icon.fa.fa-caret-right
+            |  Edit User
+          b.arrow
+      -}
+  #sidebar-collapse.sidebar-toggle.sidebar-collapse
+    i#sidebar-toggle-icon.ace-icon.fa.fa-angle-double-left.ace-save-state(data-icon1='ace-icon fa fa-angle-double-left', data-icon2='ace-icon fa fa-angle-double-right')

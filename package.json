@@ -1,0 +1,32 @@
+{
+  "name": "moonstone",
+  "version": "0.0.1",
+  "description": "A web app that does account for barber shop",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower cache clean && bower install",
+    "start": "node app.js"
+  },
+  "author": "Harry",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "async": "latest",
+    "body-parser": "latest",
+    "bower": "latest",
+    "connect-flash": "latest",
+    "cookie-parser": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "moment": "latest",
+    "mongoose": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "passport-local-mongoose": "latest",
+    "pug": "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "zombie": "latest"
+  }
+}

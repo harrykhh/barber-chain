@@ -1,0 +1,34 @@
+extends ../layout
+append content
+  .main-content-inner
+    #breadcrumbs.breadcrumbs.ace-save-state
+      ul.breadcrumb
+        li
+          i.ace-icon.fa.fa-home.home-icon
+          |  
+          a(href='/') Home
+        li.active Error 500
+    .row
+      .col-xs-12
+        .error-container
+          .well
+            h1.grey.lighter.smaller
+              span.blue.bigger-125
+                i.fa.fa-warning.text-yellow
+                |  500
+              |  Something Went Wrong
+            hr
+            h3.lighter.smaller
+              | But we are working
+              i.ace-icon.fa.fa-wrench.icon-animated-wrench.bigger-125
+              |  on it!
+            .space
+            hr
+            .space
+            .center
+              a.btn.btn-grey(href='javascript:history.back()')
+                i.ace-icon.fa.fa-arrow-left
+                |  Go Back
+              a.btn.btn-primary(href='/')
+                i.ace-icon.fa.fa-tachometer
+                |  Dashboard

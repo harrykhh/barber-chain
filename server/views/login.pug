@@ -1,0 +1,149 @@
+doctype html
+html(lang='en')
+  head
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(charset='utf-8')
+    title Login
+    meta(name='description', content='User login page')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/bower_components/components-font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/fonts.googleapis.com.css')
+    link(href='/img/favicon-moon-o.ico', rel='icon', type='image/x-icon')
+    link(rel='stylesheet', href='/css/ace.min.css')
+    //if lte IE 9
+      link(rel='stylesheet', href='/css/ace-part2.min.css')
+    link(rel='stylesheet', href='/css/ace-rtl.min.css')
+    //if lte IE 9
+      link(rel='stylesheet', href='/css/ace-ie.min.css')
+    //if lte IE 8
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+  body.login-layout
+    .main-container
+      .main-content
+        .row
+          .col-sm-10.col-sm-offset-1
+            .login-container
+              .center
+                h1
+                  i.ace-icon.fa.fa-moon-o.white
+                  |  
+                  span.red Barber
+                  |  
+                  span#id-text2.white Chain
+              .space-6
+              .position-relative
+                #login-box.login-box.visible.widget-box.no-border
+                  .widget-body
+                    .widget-main
+                      form(action='/login', method='post')
+                        fieldset
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='text', placeholder='Username' , name='username')
+                              i.ace-icon.fa.fa-user
+                          |  
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='password', placeholder='Password', name='password')
+                              i.ace-icon.fa.fa-lock
+                          .space
+                          .clearfix
+                            label.inline
+                              input.ace(type='checkbox')
+                              |  
+                              span.lbl Remember Me
+                            |  
+                            button.width-35.pull-right.btn.btn-sm.btn-primary(type='submit')
+                              i.ace-icon.fa.fa-key
+                              |  
+                              span.bigger-110 Login
+                          .space-4
+                    .toolbar.clearfix
+                      div
+                        a.forgot-password-link(href='#', data-target='#forgot-box')
+                          i.ace-icon.fa.fa-question-circle
+                          |  I forgot my password
+                #forgot-box.forgot-box.widget-box.no-border
+                  .widget-body
+                    .widget-main
+                      h4.header.red.lighter.bigger
+                        i.ace-icon.fa.fa-key
+                        |  Retrieve Password
+                      .space-6
+                      p  Enter your email and to receive instructions
+                      form
+                        fieldset
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='email', placeholder='Email')
+                              i.ace-icon.fa.fa-envelope
+                          .clearfix
+                            button.width-35.pull-right.btn.btn-sm.btn-danger(type='button')
+                              i.ace-icon.fa.fa-lightbulb-o
+                              |  
+                              span.bigger-110 Send Me!
+                    .toolbar.center
+                      a.back-to-login-link(href='#', data-target='#login-box')
+                        | Back to login
+                        i.ace-icon.fa.fa-arrow-right
+                #signup-box.signup-box.widget-box.no-border
+                  .widget-body
+                    .widget-main
+                      h4.header.green.lighter.bigger
+                        i.ace-icon.fa.fa-users.blue
+                        |  New User Registration
+                      .space-6
+                      p  Enter your details to begin:
+                      form(action='/register', method='post')
+                        fieldset
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='email', placeholder='Email' ,name='email')
+                              i.ace-icon.fa.fa-envelope
+                          |  
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='text', placeholder='Username' ,name='username')
+                              i.ace-icon.fa.fa-user
+                          |  
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='password', placeholder='Password' ,name='password')
+                              i.ace-icon.fa.fa-lock
+                          |  
+                          label.block.clearfix
+                            span.block.input-icon.input-icon-right
+                              input.form-control(type='password', placeholder='Repeat password', name='test')
+                              i.ace-icon.fa.fa-retweet
+                          .space-24
+                          .clearfix
+                            button.width-30.pull-left.btn.btn-sm(type='reset')
+                              i.ace-icon.fa.fa-refresh
+                              |  
+                              span.bigger-110 Reset
+                            |  
+                            button.width-65.pull-right.btn.btn-sm.btn-success(type='submit')
+                              span.bigger-110 Register
+                              i.ace-icon.fa.fa-arrow-right.icon-on-right
+                    .toolbar.center
+                      a.back-to-login-link(href='#', data-target='#login-box')
+                        i.ace-icon.fa.fa-arrow-left
+                        |  Back to login
+
+    //if !IE
+      script(src='/bower_components/jquery/dist/jquery.min.js')
+    // <![endif]
+    //if IE
+      script(src='/js/jquery-1.11.3.min.js')
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(type='text/javascript').
+      jQuery(function($) {
+      $(document).on('click', '.toolbar a[data-target]', function(e) {
+      e.preventDefault();
+      var target = $(this).data('target');
+      $('.widget-box.visible').removeClass('visible');//hide others
+      $(target).addClass('visible');//show target
+      });
+      });

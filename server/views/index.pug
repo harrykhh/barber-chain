@@ -1,0 +1,24 @@
+extends layout
+append content
+  include ./partials/sidebar
+  .main-content
+    .main-content-inner
+      #breadcrumbs.breadcrumbs.ace-save-state
+        ul.breadcrumb
+          li
+            i.ace-icon.fa.fa-home.home-icon
+            |  
+            a(href='/') Home
+          li.active Dashboard
+      .page-content
+        .page-header
+          h1
+            | Dashboard
+            small
+              i.ace-icon.fa.fa-angle-double-right
+              |  overview &amp; stats
+        .row
+          .col-xs-12
+append jsfiles
+  script(type='text/javascript').  
+    $('#Dashboard').addClass('active');

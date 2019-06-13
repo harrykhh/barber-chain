@@ -1,0 +1,6 @@
+{
+	"version" : "0.0.2",
+	"mongodb_url" : "MONGO_URI",
+	"mongodb_user" : "user",
+	"mongodb_password" : "password"
+}

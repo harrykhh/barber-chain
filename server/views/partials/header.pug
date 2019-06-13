@@ -1,0 +1,35 @@
+#navbar.navbar.navbar-default.ace-save-state
+  #navbar-container.navbar-container.ace-save-state
+    button#menu-toggler.navbar-toggle.menu-toggler.pull-left(type='button', data-target='#sidebar')
+      span.sr-only Toggle sidebar
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    .navbar-header.pull-left
+      a.navbar-brand(href='/')
+        small
+          i.fa.fa-moon-o
+          |  MoonStone, LLC
+    
+    .navbar-buttons.navbar-header.pull-right(role='navigation')
+      - if (user) {
+      ul.nav.ace-nav
+        li.light-blue.dropdown-modal
+          a.dropdown-toggle(data-toggle='dropdown', href='#')
+            i.fa.fa-user.fa-3x
+            |  
+            span.user-info
+                small Welcome,
+                |  #{user.username}
+            i.ace-icon.fa.fa-caret-down
+          ul.user-menu.dropdown-menu-right.dropdown-menu.dropdown-yellow.dropdown-caret.dropdown-close
+            li
+              a(href='/profile')
+                i.ace-icon.fa.fa-user
+                |  Profile
+            li.divider
+            li
+              a(href='/logout')
+                i.ace-icon.fa.fa-power-off
+                |  Logout
+      - }

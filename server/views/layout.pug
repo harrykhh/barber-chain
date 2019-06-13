@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  head
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(charset='utf-8')
+    title #{title} - MoonStone, LLC
+    meta(name='description', content='overview & stats')
+    include ./partials/head
+    block cssfiles
+  body.no-skin
+    include ./partials/header
+    #main-container.main-container.ace-save-state
+      block content
+      .footer
+        .footer-inner
+          .footer-content
+            include ./partials/footer
+      a#btn-scroll-up.btn-scroll-up.btn.btn-sm.btn-inverse(href='#')
+        i.ace-icon.fa.fa-angle-double-up.icon-only.bigger-110
+    include ./partials/jsdefaults
+    block jsfiles

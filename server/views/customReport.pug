@@ -1,0 +1,114 @@
+extends layout
+append jsfiles
+  link(rel='stylesheet', href='/bower_components/bootstrap-daterangepicker/daterangepicker.css')
+  link(rel='stylesheet', href='/bower_components/bootstrap-table/dist/bootstrap-table.min.css')
+append content
+  include ./partials/sidebar
+  .main-content
+    .main-content-inner
+      #breadcrumbs.breadcrumbs.ace-save-state
+        ul.breadcrumb
+          li
+            i.ace-icon.fa.fa-home.home-icon
+            |  
+            a(href='/') Home
+          li.active Custom Report
+      .page-content
+        .page-header
+          h1
+            | Customize Report
+            small
+              i.ace-icon.fa.fa-angle-double-right
+              |  Create a new custom report for  
+              span.storeName
+        .row
+          .col-xs-12
+            .widget-box
+              .widget-header
+                h4.widget-title
+                  span.storeName
+                  |    Report Dates
+              .widget-body
+                .widget-main.no-padding
+                  #errorMessage.alert.alert-danger.hidden
+                    button.close(type='button', data-dismiss='alert')
+                      i.ace-icon.fa.fa-times
+                    strong
+                      i.ace-icon.fa.fa-times
+                      |  Oh snap! An error has occured.  
+                    span.message  Change a few things up and try submitting again.
+                    br
+                  input#storeid.hidden
+                  form#validate-form.form-horizontal
+                    fieldset
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right Report Date
+                          .col-sm-8
+                            .clearfix
+                              .input-group
+                                span.input-group-addon
+                                  i.fa.fa-calendar.bigger-110
+                                #date.form-control
+                                  span
+                    #toolbar
+                    table#table(data-toolbar='#toolbar', data-show-export='false', data-detail-view='true', data-detail-formatter="detailFormatter" , data-show-footer='true', data-show-columns="true")
+                    .form-actions.center
+append jsfiles
+  script(type='text/javascript', src='/bower_components/moment/min/moment.min.js')
+  script(type='text/javascript', src='/bower_components/bootstrap-daterangepicker/daterangepicker.js')
+  script(type='text/javascript', src='/bower_components/bootstrap-table/dist/bootstrap-table.js')
+  script(type='text/javascript', src='/bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js')
+  script(type='text/javascript', src='/bower_components/tableExport.jquery.plugin/tableExport.min.js')
+  script(type='text/javascript', src='/bower_components/js-xlsx/dist/xlsx.full.min.js')
+  script(type='text/javascript', src='/bower_components/jspdf/dist/jspdf.min.js')
+  script(type='text/javascript', src='/bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js')
+  script(type='text/javascript', src='/js/customReport.js')
+  - if (selectedStore) {
+    script(type='text/javascript').
+      $('#storeid').val('#{selectedStore}');
+  - }
+  - if (selectedStoreName) {
+    script(type='text/javascript').
+      $('#successMessage').removeClass('hidden');
+      $('.storeName').html('#{selectedStoreName}');
+  - }
+  script(type='text/javascript').
+    $('#customReport').addClass('open');
+    $('#customreport#{selectedStore}').addClass('active');
+  - if (startdate && enddate) {
+    script(type='text/javascript').
+      $('#date').daterangepicker({
+      'minDate': '#{startdate}',
+      'maxDate': '#{enddate}',
+      'startDate': '#{startdate}',
+      'endDate': '#{startdate}',
+      'applyClass' : 'btn-sm btn-success',
+      'cancelClass' : 'btn-sm btn-default',
+      locale: {
+      applyLabel: 'Apply',
+      cancelLabel: 'Cancel',
+      },
+      ranges: {
+      'This Week': [moment().startOf('isoweek'), moment().endOf('isoweek')],
+      'Last Week': [moment().subtract(1, 'week').startOf('isoweek'), moment().subtract(1, 'week').endOf('isoweek')],
+      'This Month': [moment().startOf('month'), moment().endOf('month')],
+      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      'This Year': [moment().startOf('year'), moment().endOf('year')],
+      'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+      }
+      }, cb).prev().on(ace.click_event,
+      function(){
+      $(this).next().click();
+      });
+      cb(moment('#{startdate}'), moment('#{startdate}').endOf('isoweek'));
+  - }
+  - if (error) {
+    script(type='text/javascript').
+      $('#errorMessage').removeClass('hidden');
+  - }
+  - if (errorMessage) {
+    script(type='text/javascript').
+      $("#errorMessage .message").html('#{errorMessage}');
+      $("#validate-form").hide();
+  - }

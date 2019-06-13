@@ -1,0 +1,95 @@
+extends layout
+append jsfiles
+  link(rel='stylesheet', href='/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')
+append content
+  include ./partials/sidebar
+  .main-content
+    .main-content-inner
+      #breadcrumbs.breadcrumbs.ace-save-state
+        ul.breadcrumb
+          li
+            i.ace-icon.fa.fa-home.home-icon
+            |  
+            a(href='/') Home
+          li.active New Store
+      .page-content
+        .page-header
+          h1
+            | New Store
+            small
+              i.ace-icon.fa.fa-angle-double-right
+              |  Create New Store in Store List
+        .row
+          #successMessage.alert.alert-success.hidden
+            button.close(type='button', data-dismiss='alert')
+              i.ace-icon.fa.fa-times
+            strong
+              i.ace-icon.fa.fa-check
+              |  Sucess!  
+              span#storeName
+              |   was created sucessfully.
+            br
+          #errorMessage.alert.alert-danger.hidden
+            button.close(type='button', data-dismiss='alert')
+              i.ace-icon.fa.fa-times
+            strong
+              i.ace-icon.fa.fa-times
+              |  Oh snap! An error has occured.
+            |  Change a few things up and try submitting again.
+            br
+          .col-xs-12
+            .widget-box
+              .widget-header
+                h4.widget-title New Store Information
+              .widget-body
+                .widget-main.no-padding
+                  form#validate-form.form-horizontal(action='/NewStore', method='post')
+                    fieldset
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='desc') Store Name
+                          .col-sm-10
+                            .clearfix
+                              input(type='text', placeholder='Name of Store',name='storeDesc')
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='date') Register Start Date
+                          .col-sm-10.input-large
+                            .clearfix
+                              .input-group
+                                input#date.form-control.date-picker(name='date', type='text', data-date-format='mm-dd-yyyy')
+                                span.input-group-addon
+                                  i.fa.fa-calendar.bigger-110
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='openingRegister') Register Opening
+                          .col-sm-10
+                            .clearfix
+                              input(type='number', placeholder='Opening Amount',name='openingRegister', min='0', step='.01')
+                    .form-actions.center
+                      button.btn.btn-sm.btn-success(type='submit', disabled='true')
+                        | Save
+                        i.ace-icon.fa.fa-arrow-right.icon-on-right.bigger-110
+
+append jsfiles
+  script(type='text/javascript', src='/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js')
+  script(type='text/javascript', src='/bower_components/jquery-validation/dist/jquery.validate.min.js')
+  script(type='text/javascript', src='/js/newStore.js')
+  script(type='text/javascript').
+    $('#Store').addClass('open');
+    $('#NewStore').addClass('active');
+    $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+    }).next().on(ace.click_event, function(){
+    $(this).prev().focus();
+    });
+  - if (sname) {
+    script(type='text/javascript').
+      $('#successMessage').removeClass('hidden');
+      $('#storeName').html('#{sname}');
+  - }
+  - if (error) {
+    script(type='text/javascript').
+      $('#errorMessage').removeClass('hidden');
+  - }

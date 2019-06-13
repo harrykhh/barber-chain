@@ -1,0 +1,501 @@
+extends layout
+append jsfiles
+  link(rel='stylesheet', href='/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')
+  link(rel='stylesheet', href='/css/report.css')
+append content
+  include ./partials/sidebar
+  .main-content
+    .main-content-inner
+      #breadcrumbs.breadcrumbs.ace-save-state
+        ul.breadcrumb
+          li
+            i.ace-icon.fa.fa-home.home-icon
+            |  
+            a(href='/') Home
+          li.active Edit Daily Sales Summary
+      .page-content
+        .page-header
+          h1  Edit Daily Sales Report
+        .row
+          .col-xs-12
+            .widget-box
+              .widget-header.col-sm-12.widget-header-blue.widget-header-flat
+                h4.col-sm-3.widget-title.lighter Edit Daily Sales Summary Report For #{selectedStoreName} on 
+                .col-sm-9.input-large
+                  .clearfix
+                    .input-group
+                      input#date.form-control.date-picker(name='date', type='text', placeholder='MM-DD-YYYY', data-date-format='mm-dd-yyyy')
+                      span.input-group-addon
+                        i.fa.fa-calendar.bigger-110
+              .widget-body
+                .widget-main
+                    #fuelux-wizard-container
+                      div
+                        ul.steps
+                          li.active(data-step='1')
+                            span.step 1
+                            |  
+                            span.title Register Reading
+                          li(data-step='2')
+                            span.step 2
+                            |  
+                            span.title Service Sales
+                          li(data-step='3')
+                            span.step 3
+                            |  
+                            span.title Retail Sales
+                          li(data-step='4')
+                            span.step 4
+                            |  
+                            span.title Adjustment Gross Sales
+                          li(data-step='5')
+                            span.step 5
+                            |  
+                            span.title Expenses
+                          li(data-step='6')
+                            span.step 6
+                            |  
+                            span.title Coupons
+                          li(data-step='7')
+                            span.step 7
+                            |  
+                            span.title Deposit
+                      hr
+                      form#report.form-horizontal(action='/editReport/'+selectedStore, method='post')
+                        .step-content.pos-rel
+                          .step-pane.active(data-step='1')
+                            h3.lighter.block.green Enter the following information
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Opening
+                              .col-sm-10
+                                .clearfix
+                                  span.input-icon
+                                    input#opening(name='opening', type='number', placeholder='Amount', min='0')
+                                    i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Closing
+                              .col-sm-10
+                                .clearfix
+                                  span.input-icon
+                                    input#closing(name='closing', type='number', value='', placeholder='Amount', min='0')
+                                    i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Gross Register:
+                              .col-sm-10
+                                .clearfix
+                                  span.input-icon
+                                    input#grossregister(name='grossregister', type='number', readonly='', value='0.00')
+                                    i.ace-icon.fa.fa-usd.grey
+                          script(type='text/javascript').
+                            var room = 1;
+                            function ssales_fields() {
+                            room++;
+                            var objTo = document.getElementById('ssales')
+                            var divtest = document.createElement("div");
+                            divtest.setAttribute("class", "removeclass"+room);
+                            var rdiv = 'removeclass'+room;
+                            divtest.innerHTML = '<div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control" id="ServiceSales" name="ServiceSales[]" value="" placeholder="Service Sales"></div></div><div class="col-sm-6 nopadding"><div class="form-group"><div class="input-group"><span class="input-icon"><input type="number" class="form-control" id="ssalesamount" name="ssalesamount[]" value="0" placeholder="Amount" min="0"><i class="ace-icon fa fa-usd grey"></i></span><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_ssales_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+                            objTo.appendChild(divtest)
+                            }
+                            function remove_rsales_fields(rid) {
+                            $('.removeclass'+rid).remove();
+                            }
+                          .step-pane(data-step='2')
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .panel.panel-default
+                              .panel-heading Service Sales
+                              .panel-body
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    input#ServiceSales.form-control(type='text', name='ServiceSales[]', value='', placeholder='Service Sales')
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    .input-group
+                                      span.input-icon
+                                        input#ssalesamount.form-control(type='number', name='ssalesamount[]', value='0', placeholder='Amount', min='0')
+                                        i.ace-icon.fa.fa-usd.grey
+                                      .input-group-btn
+                                        button.btn.btn-success(type='button', onclick='ssales_fields();')
+                                          span.glyphicon.glyphicon-plus(aria-hidden='true')
+                                span#ssales
+                                .clear
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    label.control-label.no-padding-right Total Service Sales:
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    span.input-icon
+                                      input#grossservicesales(name='grossservicesales', type='number', readonly='', value='0')
+                                      i.ace-icon.fa.fa-usd.grey
+                          script(type='text/javascript').
+                            var room = 1;
+                            function rsales_fields() {
+                            room++;
+                            var objTo = document.getElementById('rsales')
+                            var divtest = document.createElement("div");
+                            divtest.setAttribute("class", "removeclass"+room);
+                            var rdiv = 'removeclass'+room;
+                            divtest.innerHTML = '<div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control" id="RetailSales" name="RetailSales[]" value="" placeholder="Retail Sales"></div></div><div class="col-sm-6 nopadding"><div class="form-group"><div class="input-group"><span class="input-icon"><input type="number" class="form-control" id="rsalesamount" name="rsalesamount[]" value="0" placeholder="Amount" min="0"><i class="ace-icon fa fa-usd grey"></i></span><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_rsales_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+                            objTo.appendChild(divtest)
+                            }
+                            function remove_ssales_fields(rid) {
+                            $('.removeclass'+rid).remove();
+                            }
+                          .step-pane(data-step='3')
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .panel.panel-default
+                              .panel-heading Retail Sales
+                              .panel-body
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    input#RetailSales.form-control(type='text', name='RetailSales[]', value='', placeholder='Retail Sales')
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    .input-group
+                                      span.input-icon
+                                        input#rsalesamount.form-control(type='number', name='rsalesamount[]', value='0', placeholder='Amount', min='0')
+                                        i.ace-icon.fa.fa-usd.grey
+                                      .input-group-btn
+                                        button.btn.btn-success(type='button', onclick='rsales_fields();')
+                                          span.glyphicon.glyphicon-plus(aria-hidden='true')
+                                span#rsales
+                                .clear
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    label.control-label.no-padding-right Total Retail Sales:
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    span.input-icon
+                                      input#grossretailsales(name='grossretailsales', type='number', readonly='', value='0')
+                                      i.ace-icon.fa.fa-usd.grey 
+                            hr
+                            div#gsalesgroup.form-group
+                              .col-sm-6.nopadding
+                                label.control-label.no-padding-right Gross Sales:
+                              .col-sm-6.nopadding
+                                .clearfix
+                                  span.input-icon
+                                    input#grosssales(name='grosssales', type='number', value='0', readonly='')
+                                    i.ace-icon.fa.fa-usd.grey                              
+                          script(type='text/javascript').
+                            var room = 1;
+                            function agsales_fields() {
+                            room++;
+                            var objTo = document.getElementById('agsales')
+                            var divtest = document.createElement("div");
+                            divtest.setAttribute("class", "removeclass"+room);
+                            var rdiv = 'removeclass'+room;
+                            divtest.innerHTML = '<div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control" id="AdjustmentGrossSales" name="AdjustmentGrossSales[]" value="" placeholder="Adjustment Gross Sales"></div></div><div class="col-sm-6 nopadding"><div class="form-group"><div class="input-group"><span class="input-icon"><input type="number" class="form-control" id="agsalesamount" name="agsalesamount[]" value="0" placeholder="Amount" min="0"><i class="ace-icon fa fa-usd grey"></i></span><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_agsales_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+                            objTo.appendChild(divtest)
+                            }
+                            function remove_agsales_fields(rid) {
+                            $('.removeclass'+rid).remove();
+                            }
+                          .step-pane(data-step='4')
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .panel.panel-default
+                              .panel-heading Adjustment Gross Sales
+                              .panel-body
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    input#AdjustmentGrossSales.form-control(type='text', name='AdjustmentGrossSales[]', value='', placeholder='Adjustment Gross Sales')
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    .input-group
+                                      span.input-icon
+                                        input#agsalesamount.form-control(type='number', name='agsalesamount[]', value='0', placeholder='Amount', min='0')
+                                        i.ace-icon.fa.fa-usd.grey
+                                      .input-group-btn
+                                        button.btn.btn-success(type='button', onclick='agsales_fields();')
+                                          span.glyphicon.glyphicon-plus(aria-hidden='true')
+                                span#agsales
+                                .clear
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    label.control-label.no-padding-right Total Adjustment Retail Sales:
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    span.input-icon
+                                      input#grossadjustmentretailsales(name='grossadjustmentretailsales', type='number', readonly='', value='0')
+                                      i.ace-icon.fa.fa-usd.grey
+                            hr
+                            .col-sm-6.nopadding
+                              .form-group
+                                label.control-label.no-padding-right Net Sales:
+                            .col-sm-6.nopadding
+                              .form-group
+                                span.input-icon
+                                  input#netsales(name='netsales', type='number', readonly='', value='0')
+                                  i.ace-icon.fa.fa-usd.grey                     
+                          script(type='text/javascript').
+                            var room = 1;
+                            function expenses_fields() {
+                            room++;
+                            var objTo = document.getElementById('expense')
+                            var divtest = document.createElement("div");
+                            divtest.setAttribute("class", "removeclass"+room);
+                            var rdiv = 'removeclass'+room;
+                            divtest.innerHTML = '<div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control" id="expenses" name="Expenses[]" value="" placeholder="Expenses"></div></div><div class="col-sm-6 nopadding"><div class="form-group"><div class="input-group"><span class="input-icon"><input type="number" class="form-control" id="expenseamount" name="expenseamount[]" value="0" placeholder="Amount" min="0"><i class="ace-icon fa fa-usd grey"></i></span><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_expenses_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+                            objTo.appendChild(divtest)
+                            }
+                            function remove_expenses_fields(rid) {
+                            $('.removeclass'+rid).remove();
+                            }
+                          .step-pane(data-step='5')
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .panel.panel-default
+                              .panel-heading Expenses
+                              .panel-body
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    input#expenses.form-control(type='text', name='expenses[]', value='', placeholder='Expenses')
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    .input-group
+                                      span.input-icon
+                                        input#expenseamount.form-control(type='number', name='expenseamount[]', value='0', placeholder='Amount', min='0')
+                                        i.ace-icon.fa.fa-usd.grey
+                                      .input-group-btn
+                                        button.btn.btn-success(type='button', onclick='expenses_fields();')
+                                          span.glyphicon.glyphicon-plus(aria-hidden='true')
+                                span#expense
+                                .clear
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    label.control-label.no-padding-right Total Expenses:
+                                .col-sm-6.nopadding
+                                  .form-group
+                                    span.input-icon
+                                      input#grossexpense(name='grossexpense', type='number', readonly='', value='0')
+                                      i.ace-icon.fa.fa-usd.grey           
+                          .step-pane(data-step='6')
+                            h3.block Coupons and Certificates
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right AAFES
+                              .col-sm-10
+                                span.input-icon
+                                  input#AAFES(name='AAFES', type='number', value='0', placeholder='Amount', min='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Certificates
+                              .col-sm-10
+                                span.input-icon
+                                  input#Certificates(name='Certificates', type='number', value='0', placeholder='Amount', min='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Total Coupons and Certificates
+                              .col-sm-10.nopadding
+                                span.input-icon
+                                  input#grosscertificates(name='grosscertificates', type='number', readonly='', value='0')
+                                  i.ace-icon.fa.fa-usd.grey   
+                          .step-pane(data-step='7')
+                            h3.block Deposit
+                            .alert.alert-danger.hidden
+                              button.close(type='button', data-dismiss='alert')
+                                i.ace-icon.fa.fa-times
+                              strong
+                                i.ace-icon.fa.fa-times
+                                |  Oh snap! An error has occured.
+                              |  Change a few things up and try submitting again.
+                              br
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Estimated Deposit:
+                              .col-sm-10
+                                span.input-icon
+                                  input#estimatedDeposit(name='estimatedDeposit', type='number', readonly='', value='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Cash &amp; Checks
+                              .col-sm-10
+                                span.input-icon
+                                  input#cashAchecks(name='cashAchecks', type='number', value='0', placeholder='Amount', min='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Credit Cards
+                              .col-sm-10
+                                span.input-icon
+                                  input#ccards(name='ccards', type='number', value='0', placeholder='Amount', min='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right DPP
+                              .col-sm-10
+                                span.input-icon
+                                  input#dpp(name='dpp', type='number', value='0', placeholder='Amount', min='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Cash Leftover:
+                              .col-sm-10
+                                span.input-icon
+                                  input#cashleftover(name='cashleftover', type='number', readonly='', value='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                            .form-group
+                              label.col-sm-2.control-label.no-padding-right Total Deposit:
+                              .col-sm-10
+                                span.input-icon
+                                  input#totaldeposit(name='totaldeposit', type='number', readonly='', value='0')
+                                  i.ace-icon.fa.fa-usd.grey
+                    hr
+                    .wizard-actions
+                      button.btn.btn-prev
+                        i.ace-icon.fa.fa-arrow-left
+                        |  Prev
+                      |  
+                      button.btn.btn-success.btn-next(data-last='Update', type='submit')
+                        | Next
+                        i.ace-icon.fa.fa-arrow-right.icon-on-right
+
+
+append jsfiles
+  script(type='text/javascript', src='/bower_components/fuelux/dist/js/fuelux.js')
+  script(type='text/javascript', src='/bower_components/jquery-validation/dist/jquery.validate.min.js')
+  script(type='text/javascript', src='/bower_components/moment/min/moment.min.js')
+  script(type='text/javascript', src='/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js')
+  script(type='text/javascript', src='/js/editReport.js')
+
+  script(type='text/javascript').  
+    $('#opening').bind('input propertychange change click keyup paste', function() {
+    $('#closing').val($('#opening').val());
+    $('#closing').prop('min', $('#opening').val());
+    });
+    $('#closing').bind('input propertychange change click keyup paste', function() {
+    $('#grossregister').val(parseFloat($('#closing').val() - $('#opening').val()).toFixed(2));
+    });
+    $('#AAFES').bind('input propertychange change click keyup paste', function() {
+    $('#grosscertificates').val(parseFloat(parseFloat($('#Certificates').val()) + parseFloat($('#AAFES').val())).toFixed(2));
+    });
+    $('#Certificates').bind('input propertychange change click keyup paste', function() {
+    $('#grosscertificates').val(parseFloat(parseFloat($('#Certificates').val()) + parseFloat($('#AAFES').val())).toFixed(2));
+    });
+    $(document).on('input propertychange change click keyup paste', 'input[name^=ssalesamount]', function(){
+    var sum = 0.0;
+    $('input[id=ssalesamount]').each(function(index, element){
+    sum+=parseFloat($(element).val());
+    });
+    $('#grossservicesales').val(parseFloat(sum).toFixed(2));
+    $('#grossservicesales').prop('max', $('#grossregister').val());     
+    });
+    $(document).on('input propertychange change click keyup paste', function(){
+    var sum = 0.0;
+    sum=parseFloat($('#grossservicesales').val())+parseFloat($('#grossretailsales').val());
+    $('#grosssales').val(parseFloat(sum).toFixed(2));
+    sum=0.0;
+    sum=parseFloat($('#grosssales').val())-parseFloat($('#grossadjustmentretailsales').val());
+    $('#netsales').val(parseFloat(sum).toFixed(2));
+    sum=0.0;
+    sum=parseFloat($('#netsales').val())-parseFloat($('#grossexpense').val())-parseFloat($('#grosscertificates').val());
+    $('#estimatedDeposit').val(parseFloat(sum).toFixed(2));
+    sum=0.0;
+    sum=parseFloat($('#cashAchecks').val())+parseFloat($('#ccards').val())+parseFloat($('#dpp').val())-parseFloat($('#estimatedDeposit').val());    
+    $('#cashleftover').val(parseFloat(sum).toFixed(2));
+    sum=0.0;
+    sum=parseFloat($('#cashAchecks').val())+parseFloat($('#ccards').val())+parseFloat($('#dpp').val());    
+    $('#totaldeposit').val(parseFloat(sum).toFixed(2));
+    });
+    $(document).on('input propertychange change click keyup paste', 'input[name^=rsalesamount]', function(){
+    var sum = 0.0;
+    $('input[id=rsalesamount]').each(function(index, element){
+    sum+=parseFloat($(element).val());
+    });
+    $('#grossretailsales').val(parseFloat(sum).toFixed(2));
+    $('#grossretailsales').prop('max', $('#grossregister').val());     
+    });
+    $(document).on('input propertychange change click keyup paste', 'input[name^=agsalesamount]', function(){
+    var sum = 0.0;
+    $('input[id=agsalesamount').each(function(index, element){
+    sum+=parseFloat($(element).val());
+    });
+    $('#grossadjustmentretailsales').val(parseFloat(sum).toFixed(2));
+    $('#grossadjustmentretailsales').prop('max', $('#grosssales').val());     
+    });
+    $(document).on('input propertychange change click keyup paste', 'input[name^=expenseamount]', function(){
+    var sum = 0.0;
+    $('input[id=expenseamount]').each(function(index, element){
+    sum+=parseFloat($(element).val());
+    });
+    $('#grossexpense').val(parseFloat(sum).toFixed(2));    
+    });
+    $('#editreport#{selectedStore}').addClass('active');
+    $('#editReport').addClass('open');
+    var objects = '#{reportDate}';
+    var availableDates = objects.split(',');
+    $('.date-picker').datepicker({
+    beforeShowDay:
+    function(dt)
+    {
+    return available(dt);
+    },
+    endDate: "Today",
+    autoclose: true,
+    todayHighlight: true
+    })
+    //show datepicker when clicking on the icon
+    .next().on(ace.click_event, function(){
+    $(this).prev().focus();
+    });
+  - if (reportDate) {
+    script(type='text/javascript').
+      var objects = '#{reportDate}';
+      var availableDates = objects.split(',');
+      $('.date-picker').datepicker('setDate', availableDates[0]);
+  - }
+  - else {
+    script(type='text/javascript').
+      $('.date-picker').datepicker('setStartDate','Today');
+      $('.date-picker').datepicker('setDate','Today');
+  - }   
+  - if (lastOpening) {
+    script(type='text/javascript').
+      $('#opening').val('#{lastOpening}');
+      $('#opening').prop('readonly', true);
+      $('#closing').val('#{lastOpening}');
+      $('#closing').prop('min', $('#opening').val());
+  - }
+  - if (submiterror) {
+    script(type='text/javascript').
+      $('.alert .alert-danger').removeClass('hidden');
+  - }
+ 

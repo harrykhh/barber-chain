@@ -1,0 +1,104 @@
+extends layout
+append jsfiles
+  link(rel='stylesheet', href='/bower_components/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css')
+append content
+  include ./partials/sidebar
+  .main-content
+    .main-content-inner
+      #breadcrumbs.breadcrumbs.ace-save-state
+        ul.breadcrumb
+          li
+            i.ace-icon.fa.fa-home.home-icon
+            |  
+            a(href='/') Home
+          li.active New User
+      .page-content
+        .page-header
+          h1
+            | New User
+            small
+              i.ace-icon.fa.fa-angle-double-right
+              |  Edit New User information
+        .row
+          #successMessage.alert.alert-success.hidden
+            button.close(type='button', data-dismiss='alert')
+              i.ace-icon.fa.fa-times
+            strong
+              i.ace-icon.fa.fa-check
+              |  Sucess!  
+              span#usrname
+              |   was saved sucessfully.
+            br
+          #errorMessage.alert.alert-danger.hidden
+            button.close(type='button', data-dismiss='alert')
+              i.ace-icon.fa.fa-times
+            strong
+              i.ace-icon.fa.fa-times
+              |  Oh snap! An error has occured.
+            |  Change a few things up and try submitting again.
+            br
+          .col-xs-12
+            .widget-box
+              .widget-header
+                h4.widget-title Edit User Information
+              .widget-body
+                .widget-main.no-padding
+                  form#validate-form.form-horizontal(action='/newUser', method='post')
+                    fieldset
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='username') User Name
+                          .col-sm-10
+                            .clearfix
+                              input#username(type='text', placeholder='Name of User',name='username')
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='email') Email
+                          .col-sm-10
+                            .clearfix
+                              input#email(type='email', placeholder='Email', name='email')
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='password') Password
+                          .col-sm-10
+                            .clearfix
+                              input#password(type='password', placeholder='Password', name='password')
+                      .col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='password2') Confirmed Password
+                          .col-sm-10
+                            .clearfix
+                              input#password2(type='password', placeholder='Confirm Password', name='password2')            
+                      #isadmin.col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-2.control-label.no-padding-right(for='admin') Admin
+                          .col-sm-10
+                            input#admin.ace.ace-switch.ace-switch-5(name='admin', type='checkbox')
+                            span.lbl
+                      #storesselect.col-sm-12.nopadding
+                        .form-group
+                          label.col-sm-3.control-label.no-padding-top(for='duallist') Stores Assigned to User
+                          .col-sm-8
+                            select#duallist(multiple='multiple', size='10', name='stores[]')
+                            .hr.hr-16.hr-dotted
+                    .form-actions.center
+                      button.btn.btn-sm.btn-success(type='submit', disabled='true')
+                        | Save
+                        i.ace-icon.fa.fa-arrow-right.icon-on-right.bigger-110
+
+append jsfiles
+  script(type='text/javascript', src='/bower_components/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')
+  script(type='text/javascript', src='/bower_components/jquery-validation/dist/jquery.validate.min.js')
+  script(type='text/javascript', src='/js/newUser.js')
+  script(type='text/javascript').
+    $('#User').addClass('open');
+    $('#NewUser').addClass('active');
+  - if (sname) {
+    script(type='text/javascript').
+      $('#successMessage').removeClass('hidden');
+      $('#usrname').html('#{sname}');
+  - }
+  - if (error) {
+    script(type='text/javascript').
+      $('#errorMessage').removeClass('hidden');
+  - }

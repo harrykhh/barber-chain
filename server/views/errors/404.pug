@@ -1,0 +1,31 @@
+extends ../layout
+append content
+  .main-content-inner
+    #breadcrumbs.breadcrumbs.ace-save-state
+      ul.breadcrumb
+        li
+          i.ace-icon.fa.fa-home.home-icon
+          |  
+          a(href='/') Home
+        li.active Error 404 - File not found
+    .page-content
+      .row
+        .col-xs-12
+          .error-container
+            .well
+              h1.grey.lighter.smaller
+                span.blue.bigger-125
+                  i.fa.fa-warning.text-yellow
+                  |  404
+                  |  Oops! Page not found.
+              hr
+              h3.lighter.smaller We looked everywhere but we couldn&apos;t find it!
+              hr
+              .space
+              .center
+                a.btn.btn-grey(href='javascript:history.back()')
+                  i.ace-icon.fa.fa-arrow-left
+                  |  Go Back
+                a.btn.btn-primary(href='/')
+                  i.ace-icon.fa.fa-tachometer
+                  |  Dashboard
